@@ -309,12 +309,12 @@ async function calculatingMark(examId, ansResult) {
   const markPerQuestion = totalMark / questionList.length;
   ansResult.forEach((ans) => {
     const { questionId, answer } = ans;
-    const normalizedAnswer = Array.isArray(answer) ? answer.join(',') : answer.toString();
+    const normalizedAnswer = Array.isArray(answer) ? answer.join(',') : answer ? answer.toString() : null;
 
     const isCorrect = questionList.some(correctQuestion => {
       const { id, correctAns, questionType } = correctQuestion;
       if (questionType !== 'radio') {
-        return questionId === id && correctAns.toLowerCase().includes(normalizedAnswer.toLowerCase().trim());
+        return questionId === id && correctAns.toLowerCase().trim().includes(normalizedAnswer?.toLowerCase().trim());
       } else {
         return questionId === id && normalizedAnswer === correctAns;
       }
