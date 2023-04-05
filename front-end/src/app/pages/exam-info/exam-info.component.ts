@@ -42,11 +42,11 @@ export class ExamInfoComponent implements OnInit {
   getExamList() {
     this.examSvc.getMarkWithExam().subscribe({
       next: (exam) => {
-        const result = exam.data
+        const result = exam.data;
         let markData = result.map((mark: any) => {
           return mark;
         }).filter((mark: any) => {
-          return mark?.attributes.user.data.id === this.loggedInUserId;
+          return mark?.attributes.user?.data.id === this.loggedInUserId;
         });
 
         this.examInfoResult = markData[0]?.attributes.records.map((record: any) => {
@@ -70,7 +70,7 @@ export class ExamInfoComponent implements OnInit {
             timeSpend: timeSpend
           };
         });
-        if (this.examInfoResult.length) {
+        if (this.examInfoResult?.length) {
           this.showData();
         }
       },
@@ -90,16 +90,6 @@ export class ExamInfoComponent implements OnInit {
   }
 
   formatDuration(timeSpend: number): string {
-    if (timeSpend >= 60) {
-      const hours = Math.floor(timeSpend / 60);
-      const minutes = Math.floor(timeSpend % 60);
-      const hourSuffix = hours === 1 ? ' hour' : ' hours';
-      const minuteSuffix = minutes === 1 ? ' minute' : ' minutes';
-      return `${hours}${hourSuffix} ${minutes}${minuteSuffix}`;
-    } else {
-      const minuteSuffix = timeSpend === 1 ? ' minute' : ' minutes';
-      timeSpend = Math.round(timeSpend);
-      return `${timeSpend}${minuteSuffix}`;
-    }
+    return this.examSvc.formatDuration(timeSpend);
   }
 }

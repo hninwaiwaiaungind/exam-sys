@@ -59,7 +59,7 @@ export class UserFormComponent implements OnInit {
         if (this.route.url.includes('/user/')) {
           this.pageTitle = 'Edit User';
           this.passwordRequired = false;
-        } else if (this.route.url === '/user-create') {
+        } else if (this.route.url === '/user') {
           this.pageTitle = 'Create New User';
           this.passwordRequired = true;
         } else {

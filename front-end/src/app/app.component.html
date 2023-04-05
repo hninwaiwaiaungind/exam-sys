@@ -26,7 +26,7 @@
               </button>
               Exams
             </li>
-            <li *ngIf="isAdmin" class="sub-menu-item" routerLink="/exam" routerLinkActive="active-menu"
+            <li *ngIf="isAdmin" class="sub-menu-item" routerLink="/exam" [ngClass]="{'active-menu' : activeExamRegister}"
               (click)="showExamMenu = false">
               <button mat-mini-fab class="icon">
                 <mat-icon>add</mat-icon>
@@ -63,19 +63,19 @@
   <mat-drawer #drawer mode="over" position="end">
     <mat-icon class="close-btn" (click)="drawer.close()">close</mat-icon>
     <ul>
-      <li class="nav-drawer-item" routerLink="/my-test" routerLinkActive="active">
+      <li class="nav-drawer-item" routerLink="/my-test" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon> list_alt</mat-icon>My Test
       </li>
-      <li class="nav-drawer-item" routerLink="/exam-list" routerLinkActive="active">
+      <li class="nav-drawer-item" routerLink="/exam-list" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon>receipt</mat-icon>Exams
       </li>
-      <li *ngIf="isAdmin" class="nav-drawer-item" routerLink="/exam" routerLinkActive="active">
+      <li *ngIf="isAdmin" class="nav-drawer-item" routerLink="/exam" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon>add</mat-icon>Exam Register
       </li>
-      <li *ngIf="isAdmin" class="nav-drawer-item" routerLink="/user-list" routerLinkActive="active">
+      <li *ngIf="isAdmin" class="nav-drawer-item" routerLink="/user-list" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon>supervised_user_circle</mat-icon>Users List
       </li>
-      <li class="nav-drawer-item" routerLink="/profile/me" routerLinkActive="active">
+      <li class="nav-drawer-item" routerLink="/profile/me" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon>person_outline</mat-icon>Profile
       </li>
       <li class="nav-drawer-item" (click)="drawer.close();logOut()">

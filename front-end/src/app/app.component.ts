@@ -24,6 +24,7 @@ export class AppComponent {
   loggedInUser!: any;
   userDetails!: User;
   isAdmin = false;
+  activeExamRegister = false;
 
   constructor(
     private router: Router,
@@ -51,7 +52,10 @@ export class AppComponent {
 
   ngDoCheck() {
     const currentRoute = this.router.url;
-    this.examActive = currentRoute.includes('exam') || currentRoute.includes('exam-list');
+    this.examActive = ['/exam', '/exam-list'].includes(currentRoute);
+    if (this.examActive) {
+      currentRoute === '/exam' ? this.activeExamRegister = true : this.activeExamRegister = false;
+    }
   }
 
   getUser() {

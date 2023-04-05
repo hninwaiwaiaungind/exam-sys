@@ -1,16 +1,16 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {ActivatedRoute, Router} from '@angular/router';
 
 //services
-import { ExamService } from 'src/app/services/exam.service';
-import { MessagesService } from 'src/app/services/messages.service';
+import {ExamService} from 'src/app/services/exam.service';
+import {MessagesService} from 'src/app/services/messages.service';
 
 //pipe
-import { UsernameFilterPipe } from 'src/app/pipes/username-filter.pipe';
-import { ExamResultFilterPipe } from 'src/app/pipes/exam-result-filter.pipe';
+import {UsernameFilterPipe} from 'src/app/pipes/username-filter.pipe';
+import {ExamResultFilterPipe} from 'src/app/pipes/exam-result-filter.pipe';
 
 @Component({
   selector: 'app-exam-result',
@@ -99,7 +99,7 @@ export class ExamResultComponent implements OnInit {
           let durationMs = ansEndDte.getTime() - ansStartDte.getTime();
           let duration = durationMs / (1000 * 60);
 
-          let examResult = {
+          return {
             examname: this.examname,
             username: exam.user.username,
             passMark: exam.mark[0].exam.passMark,
@@ -107,8 +107,7 @@ export class ExamResultComponent implements OnInit {
             ansStartDte: ansStartDte,
             ansEndDte: ansEndDte,
             duration: duration
-          }
-          return examResult;
+          };
         });
 
         this.examWithMarkResult.push(...resultData);
@@ -128,17 +127,7 @@ export class ExamResultComponent implements OnInit {
   }
 
   formatDuration(timeSpend: number): string {
-    if (timeSpend >= 60) {
-      const hours = Math.floor(timeSpend / 60);
-      const minutes = Math.floor(timeSpend % 60);
-      const hourSuffix = hours === 1 ? ' hour' : ' hours';
-      const minuteSuffix = minutes === 1 ? ' minute' : ' minutes';
-      return `${hours}${hourSuffix} ${minutes}${minuteSuffix}`;
-    } else {
-      const minuteSuffix = timeSpend === 1 ? ' minute' : ' minutes';
-      timeSpend = Math.round(timeSpend);
-      return `${timeSpend}${minuteSuffix}`;
-    }
+    return this.examSvc.formatDuration(timeSpend);
   }
 
   textChange(event: any) {

@@ -73,4 +73,21 @@ export class ExamService {
     return this.http.get(`${environment.apiEndPoint}/marks?populate[user]=*&populate[records][populate]=exam`);
   }
 
+  formatDuration(timeSpend: number): string {
+    if (timeSpend >= 60) {
+      const hours = Math.floor(timeSpend / 60);
+      const minutes = Math.floor(timeSpend % 60);
+      const hourSuffix = hours === 1 ? ' hour' : ' hours';
+      const minuteSuffix = minutes === 1 ? ' minute' : ' minutes';
+      return `${hours}${hourSuffix} ${minutes}${minuteSuffix}`;
+    } else {
+      const minuteSuffix = timeSpend === 1 ? ' minute' : ' minutes';
+      if (timeSpend < 1) {
+        const second = Math.round(timeSpend * 60);
+        return `${second} seconds`;
+      }
+      timeSpend = Math.round(timeSpend);
+      return `${timeSpend}${minuteSuffix}`;
+    }
+  }
 }
