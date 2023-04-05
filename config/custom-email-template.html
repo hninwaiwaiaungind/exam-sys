@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Your Exam Results</title>
+  <style>
+    body {
+      font-family: 'Roboto', 'Arial', 'sans-serif';
+    }
+
+    .container {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333;
+      width: 80%;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #f2f2f2;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      margin-top: 0;
+      padding: 30px;
+      background: #3596B5;
+      text-align: center;
+      font-size: 24px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .exam-title {
+      line-break: anywhere;
+    }
+
+    .result-details {
+      list-style: none;
+      padding: 20px;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .detail-title {
+      font-weight: bold;
+      font-size: 17px;
+      width: 40%;
+    }
+
+    .detail-description {
+      white-space: normal;
+      line-break: anywhere;
+    }
+
+    td {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <section class="container">
+    <h1>Your Exam Results</h1>
+    <table class="result-details">
+      <tr>
+        <td class="detail-title">Exam Title</td>
+        <td class="exam-title">
+          <%= exam.name %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Number of questions</td>
+        <td class="detail-description">
+          <%= exam.totalQuestions %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Username</td>
+        <td class="detail-description">
+          <%= user.username %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Email</td>
+        <td class="detail-description">
+          <%= user.email %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Answer Start Date</td>
+        <td class="detail-description">
+          <%= exam.startDate %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Answer End Date</td>
+        <td class="detail-description">
+          <%= exam.endDate %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Duration</td>
+        <td class="detail-description">
+          <%= exam.duration %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Score</td>
+        <td class="detail-description">
+          <%= exam.totalMarks %>
+        </td>
+      </tr>
+      <tr>
+        <td class="detail-title">Result</td>
+        <td class="detail-description">
+          <%= exam.grade %>
+        </td>
+      </tr>
+    </table>
+  </section>
+</body>
+
+</html>

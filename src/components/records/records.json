@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_records_records",
+  "info": {
+    "displayName": "records",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "exam": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::exam.exam"
+    },
+    "mark": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    },
+    "ansStartDte": {
+      "type": "datetime"
+    },
+    "ansEndDte": {
+      "type": "datetime"
+    }
+  }
+}
