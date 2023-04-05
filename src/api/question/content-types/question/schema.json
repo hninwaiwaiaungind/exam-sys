@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "questions",
+  "info": {
+    "singularName": "question",
+    "pluralName": "questions",
+    "displayName": "Question",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "question": {
+      "type": "text",
+      "required": true
+    },
+    "answerChoice": {
+      "type": "richtext",
+      "required": true
+    },
+    "allowMultiAns": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "questionType": {
+      "type": "enumeration",
+      "enum": [
+        "radio",
+        "checkbox",
+        "textbox"
+      ],
+      "default": "radio",
+      "required": true
+    },
+    "correctAns": {
+      "type": "string",
+      "required": true
+    },
+    "exams": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::exam.exam",
+      "inversedBy": "questions"
+    }
+  }
+}

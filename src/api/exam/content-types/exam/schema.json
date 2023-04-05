@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "exams",
+  "info": {
+    "singularName": "exam",
+    "pluralName": "exams",
+    "displayName": "Exam",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "duration": {
+      "type": "integer",
+      "required": true,
+      "min": 5,
+      "default": 5
+    },
+    "startDte": {
+      "type": "datetime",
+      "required": true
+    },
+    "endDte": {
+      "type": "datetime",
+      "required": true
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "exams"
+    },
+    "questions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::question.question",
+      "mappedBy": "exams"
+    },
+    "passMark": {
+      "type": "integer",
+      "required": true,
+      "min": 0
+    }
+  }
+}
