@@ -1,0 +1,79 @@
+<div class="container">
+  <mat-card class="card">
+    <div class="content-blk">
+      <div class="search-blk">
+        <mat-form-field class="search-input" appearance="outline">
+          <mat-label class="cmn-font">Search User Name</mat-label>
+          <input class="input-text" matInput placeholder="Search by username" name="searchName" [(ngModel)]="searchName"
+            (input)="textChange($event)" #input>
+        </mat-form-field>
+        <mat-form-field class="search-input" appearance="outline">
+          <mat-label class="cmn-font">Role</mat-label>
+          <mat-select class="cmn-font" [(ngModel)]="selectedRole" (selectionChange)="searchByUsernameAndRole()">
+            <mat-option value="All">All</mat-option>
+            <mat-option *ngFor="let role of roles" [value]=role.type>{{role.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button class="btn btn-search" (click)="searchByUsernameAndRole()"
+          [disabled]="searchName == ''">Search</button>
+        <button mat-raised-button color="warn" class="btn" (click)="canclevalue()"
+          [disabled]="searchName == ''">Clear</button>
+      </div>
+      <div class="btn-group">
+        <button mat-raised-button color="primary" routerLink="/csv-registration" class="cmn-btn">
+          <mat-icon class="mat-18">cloud_upload</mat-icon>
+          CSV Upload
+        </button>
+        <button mat-raised-button color="primary" routerLink="/user" class="cmn-btn">
+          <mat-icon class="mat-18">person_add_alt</mat-icon>
+          Add New User
+        </button>
+      </div>
+    </div>
+  </mat-card>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>No</th>
+        <td mat-cell *matCellDef="let i = index">{{ paginator.pageSize * paginator.pageIndex + i + 1 }}</td>
+      </ng-container>
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let user">{{ user.role.type }}</td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let users" class="mat-btn-group">
+          <button mat-mini-fab color="primary" class="mat-btn" (click)="toUpdate(users.id)">
+            <mat-icon class="mat-icon">edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" class="mat-btn" (click)="deleteUser(users.id)">
+            <mat-icon class="mat-icon">delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns; let i=index;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="7">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="paginator">
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
+      aria-label="Select page of periodic elements" class="panginator mat-table-bottom-bar mat-elevation-z8">
+    </mat-paginator>
+  </div>
+</div>

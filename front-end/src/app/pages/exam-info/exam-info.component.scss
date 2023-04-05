@@ -1,0 +1,364 @@
+.container {
+  margin: 8rem auto;
+  width: 90%;
+
+  .title {
+    color: #3596B5;
+  }
+
+  .card-blk {
+    max-width: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+
+    .card-group {
+      .card {
+        background-color: hsl(0, 0%, 100%);
+        border-radius: 6px;
+        box-shadow: hsl(220, 71%, 15%...);
+        color: hsl(220, 75%, 25%);
+        fill: hsl(220, 82%, 98%);
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+        .header {
+          align-items: center;
+
+          .firstName {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+              0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+              0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+          }
+
+          .pink {
+            background-color: pink;
+          }
+
+          .blue {
+            background-color: blue;
+          }
+
+          .green {
+            background-color: green;
+          }
+
+          .yellow {
+            background-color: yellow;
+          }
+
+          .purple {
+            background-color: purple;
+          }
+
+          .title {
+            font-size: 20px;
+            padding-bottom: 15px;
+            white-space: normal;
+            line-break: anywhere;
+          }
+        }
+
+        .mat-mdc-list-item-icon {
+          color: #424242c4;
+        }
+
+        .content {
+          margin-top: 10px;
+
+          .mark-info {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 10px 0;
+
+            .text {
+              font-size: 20px;
+              color: #919090;
+              font-weight: 500;
+            }
+
+            .mark-blk {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 1.7rem;
+              font-weight: bold;
+              width: 60px;
+              height: 60px;
+              border-radius: 50%;
+              color: white;
+              box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+                0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+                0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+            }
+          }
+
+          .mat-mdc-list {
+            display: flex;
+            justify-content: center;
+          }
+
+
+          .mat-mdc-list-item {
+            width: 50%;
+            border-radius: 50%;
+          }
+
+          .mark-blk.success {
+            background-color: #7def7d;
+          }
+
+          .mark-blk.fail {
+            background-color: #FF7C8A;
+          }
+
+          .info-blk {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #fafafad6;
+            max-width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+
+            .exam-info {
+              width: 48%;
+            }
+
+            .exam-result {
+              width: 48%;
+            }
+
+            .exam-info,
+            .exam-result {
+
+              .date,
+              .time {
+                background-color: rgba(255, 255, 255, 0.8);
+              }
+
+              .cmn-title-blk {
+                color: #3596B5;
+                font-size: 18px;
+                font-weight: 500;
+              }
+            }
+
+            .icon-btn,
+            span {
+              color: #919090;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .no-exam-info {
+    padding: 20px;
+    text-align: center;
+    width: 50%;
+    margin: 19rem auto;
+    font-size: 18px;
+    border-radius: 10px;
+    background-color: hsl(0, 0%, 100%);
+    box-shadow: hsl(220, 71%, 15%...);
+    color: hsl(220, 75%, 25%);
+    fill: hsl(220, 82%, 98%);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  .paginator {
+    margin-top: 20px;
+  }
+}
+
+::ng-deep .mdc-evolution-chip-set__chips {
+  flex-direction: column !important;
+}
+
+::ng-deep .mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
+  margin-left: 0 !important;
+}
+
+::ng-deep .mdc-evolution-chip-set .mdc-evolution-chip {
+  margin-left: 0 !important;
+}
+
+@media screen and (min-width: 1345px) and (max-width:1429px) {
+  .container {
+    .card-blk {
+      grid-template-columns: 29.041vw 29.041vw 29.041vw;
+      gap: 1.4vw;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width:1344.9px) {
+  .container {
+    .card-blk {
+      grid-template-columns: 43.457vw 42.257vw;
+      gap: 2.93vw;
+
+      .card-group {
+        .card {
+          .header {
+            .firstName {
+              width: 50px;
+              height: 50px;
+            }
+
+            .title {
+              font-weight: 500;
+              font-size: 1.953vw;
+              padding-bottom: 1.465vw;
+            }
+          }
+
+          .mat-mdc-card-content {
+            display: block;
+            padding: 0 7px 20px 7px;
+          }
+
+          .content {
+            .mat-mdc-list {
+              display: flex;
+              justify-content: flex-end;
+            }
+
+            .mat-mdc-list-item {
+              width: 50%;
+            }
+
+            .info-blk {
+
+              .exam-info,
+              .exam-result {
+                .cmn-title-blk {
+                  font-size: 1.358vw;
+                }
+              }
+
+              span {
+                font-size: 1.472vw;
+              }
+            }
+          }
+        }
+      }
+
+      .card-group:nth-of-type(2n) {
+        .mat-mdc-list {
+          display: flex;
+          justify-content: flex-start !important;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 510px) and (max-width:767.9px) {
+  .container {
+    .card-blk {
+      grid-template-columns: 1fr;
+      gap: 3.911vw;
+
+      .card-group {
+        padding: 0 30px;
+
+        .card {
+          .header {
+            .firstName {
+              width: 45px;
+              height: 45px;
+            }
+
+            .title {
+              font-size: 17px;
+              padding-bottom: 1.956vw;
+            }
+          }
+
+          .content {
+            .mat-mdc-list-item {
+              width: 100%;
+            }
+
+            .info-blk {
+              .exam-info {
+                margin-right: 3.911vw;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 509.9px) {
+  .container {
+    .card-blk {
+      grid-template-columns: 1fr;
+      gap: 30px;
+
+      .card-group {
+        padding: 0 20px;
+
+        .card {
+          .header {
+            .firstName {
+              width: 45px;
+              height: 45px;
+            }
+
+            .title {
+              font-size: 18px;
+              padding-bottom: 15px;
+            }
+          }
+
+          .content {
+            .mat-mdc-list-item {
+              width: 100%;
+            }
+
+            .info-blk {
+              display: block;
+              width: 100%;
+              max-width: 100%;
+
+              .exam-info {
+                width: 100%;
+                margin-right: 0;
+              }
+
+              .exam-result {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .no-exam-info {
+      font-size: 16px;
+    }
+  }
+}

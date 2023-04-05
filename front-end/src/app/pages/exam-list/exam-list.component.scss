@@ -1,0 +1,221 @@
+.card-container {
+  padding: 20px;
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 85%;
+
+  .filter-card {
+    width: 99.0%;
+
+    .filter-row:after {
+      content: "";
+      display: table;
+      clear: both;
+      width: 120px;
+    }
+
+    .filter-column {
+      float: left;
+
+      .search-input {
+        width: 200px;
+        margin: 20px 0px 0px 20px;
+      }
+
+      .search-btn {
+        margin: 30px 0px 8px 30px;
+      }
+    }
+
+    @media screen and (max-width:"1280px") {
+      .filter-btn {
+        width: 230px;
+        margin-bottom: 30px;
+      }
+
+
+      @media screen and (max-width:"830px") and (min-width:"599px") {
+        .filter-searchform {
+          width: 500px;
+        }
+      }
+
+      @media screen and (max-width:"600px") and (min-width:"400px") {
+        .filter-searchform {
+          width: 300px;
+
+          .search-input {
+            width: 300px;
+            margin: 20px 0px 0px 20px;
+          }
+        }
+      }
+
+      @media screen and (max-width:"400px") {
+        .filter-searchform {
+          width: 200px;
+
+          .search-input {
+            width: 200px;
+            margin: 20px 0px 0px 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .card {
+    width: 98.0%;
+    margin-top: 20px;
+
+    .card-title {
+      white-space: nowrap;
+      max-width: 450px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-edit {
+      position: absolute;
+      right: 2%;
+      top: 2%;
+      color: #3596b5;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    @media screen and (max-width:"1280px") {
+      .card-title {
+        max-width: 200px;
+      }
+
+      .duration-row {
+        width: 200px;
+      }
+
+      @media screen and (max-width:"830px") and (min-width:"600px") {
+        .card-title {
+          max-width: 100px;
+        }
+
+        .duration-row {
+          width: 200px;
+        }
+      }
+
+      @media screen and (max-width:"599px") and (min-width:"560px") {
+        .card-title {
+          max-width: 320px;
+        }
+      }
+
+      @media screen and (max-width:"559px") and (min-width:"510px") {
+        .card-title {
+          max-width: 280px;
+        }
+      }
+
+      @media screen and (max-width:"509px") and (min-width:"420px") {
+        .card-title {
+          max-width: 220px;
+        }
+      }
+
+      @media screen and (max-width:"440px") {
+        .card-title {
+          max-width: 120px;
+        }
+      }
+    }
+
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+      width: 120px;
+    }
+
+    .date,
+    .duration {
+      margin-top: 2px;
+      opacity: 0.7;
+    }
+
+    .duration-row {
+      max-width: 600px;
+    }
+
+    .active,
+    .expired,
+    .upcoming {
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .active {
+      background-color: rgb(121, 220, 114);
+      border-color: rgb(121, 220, 114);
+
+      p {
+        color: #fff;
+      }
+    }
+
+    .expired {
+      background-color: rgb(233, 107, 107);
+      border-color: rgb(233, 107, 107);
+
+      p {
+        color: #fff;
+      }
+    }
+
+    .upcoming {
+      background-color: rgb(156, 128, 238);
+      border-color: rgb(156, 128, 238);
+
+      p {
+        color: #fff;
+      }
+    }
+
+    .exam-title {
+      font-size: 24px;
+      min-width: 500px;
+    }
+
+    .mat-success {
+      background-color: rgb(121, 220, 114);
+      color: #fff;
+    }
+
+    .title {
+      opacity: 0.6;
+    }
+
+    .column {
+      float: left;
+      padding: 10px;
+    }
+
+    .btn,
+    .btn-start {
+      margin-left: 10px;
+
+    }
+
+    .btn-start {
+      color: #4caf50;
+    }
+
+    .btn-score,
+    .btn-answer {
+      color: #3596b5;
+    }
+  }
+
+  .paginator {
+    margin-top: 10px;
+    width: 99%;
+  }
+}

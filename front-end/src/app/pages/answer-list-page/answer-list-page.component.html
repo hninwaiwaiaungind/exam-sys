@@ -1,0 +1,72 @@
+<div class="noExamTitle" *ngIf="noDataBeforeExam">
+  <mat-card-title>
+    There is no exam
+  </mat-card-title>
+</div>
+<div class="container" *ngIf="exams">
+  <div class="title-container">
+    <div class="title">
+      <mat-card-title matTooltip={{exams.name}} matTooltipPosition="left">{{exams.name}}</mat-card-title>
+      <span *ngIf="exams">
+        <mat-icon>schedule</mat-icon>Durations:{{exams.duration}}mins
+      </span>
+    </div>
+
+    <div class="time-div">
+      <span *ngIf="exams" class="start-dte">
+        <mat-icon>calendar_today</mat-icon>Start date :
+        {{exams.startDte | date: 'MMM dd, y, hh:mm a'}}
+      </span>
+      <span *ngIf="exams" class="end-dte">
+        <mat-icon>calendar_today</mat-icon>End date :
+        {{exams.endDte| date:'MMM dd, y, hh:mm a'}}
+      </span>
+    </div>
+  </div>
+
+  <mat-card *ngFor="let question of questionDataSource | async" class="answer">
+    <p>{{ question.question }}</p>
+    <mat-divider></mat-divider>
+
+    <!-- textbox answer -->
+    <div *ngIf="question.questionType === 'textbox' else otherQuestionType" class="text-area">
+      {{question.correctAns}}
+    </div>
+    <!-- textbox answer -->
+
+    <ng-template #otherQuestionType>
+      <div *ngFor="let answer of question.answerChoice, index as i">
+        <div class="other-ans">
+          <mat-icon>
+            <!-- Show checked box for correct answers -->
+            <ng-container *ngIf="question.allowMultiAns && findCorrectAns(question.correctAns,i+1 )">
+              check_box
+            </ng-container>
+            <!-- Show checked box for single correct answer -->
+            <ng-container *ngIf="!question.allowMultiAns && i+1 === +question.correctAns">
+              radio_button_checked
+            </ng-container>
+            <!-- Show radio for incorrect answer -->
+            <ng-container *ngIf="!question.allowMultiAns && i+1 !== +question.correctAns">
+              radio_button_unchecked
+            </ng-container>
+            <!-- Show unchecked box for incorrect answer -->
+            <ng-container
+              *ngIf="(question.allowMultiAns && !findCorrectAns(question.correctAns,i+1 )) || (!question.allowMultiAns && i+1 !== +question.correctAns)">
+              check_box_outline_blank
+            </ng-container>
+          </mat-icon>
+          <p>
+            {{ answer }}
+          </p>
+        </div>
+      </div>
+    </ng-template>
+
+  </mat-card>
+  <div [hidden]="!showPaginator">
+    <mat-paginator #paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
+      aria-label="Select page of periodic elements" class="mat-table-bottom-bar mat-elevation-z8">
+    </mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@font-face {
+  font-family: Roboto, sans-serif;
+  src: url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+}
+
+* {
+  font-family: 'Roboto', 'sans-serif';
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  .mat-mdc-menu-panel.mat-mdc-menu-panel {
+    overflow: visible;
+  }
+
+  .select-menu {
+    top: 15px;
+  }
+
+  .exam-menu,
+  .user-menu {
+    border-radius: 8px;
+  }
+
+  .exam-menu::before,
+  .user-menu::before {
+    content: "";
+    position: absolute;
+    top: -24px;
+    left: 7%;
+    z-index: 2000;
+    border-top: 11px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 14px solid #fff;
+    border-left: 18px solid transparent;
+  }
+
+  .user-menu::before {
+    right: 1%;
+  }
+
+  .mat-mdc-menu-content {
+    padding: 0;
+
+    ul {
+      right: 21px;
+      background: #fff;
+      padding: 5px;
+      margin: 0;
+
+      .sub-menu-item,
+      .user-menu-item {
+        padding: 10px;
+        margin: 5px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        gap: 10px;
+        transition: all 0.5s;
+        border-radius: 5px;
+
+        .icon {
+          background: #3596B5;
+          transition: all 0.5s;
+        }
+      }
+
+      .sub-menu-item:hover,
+      .user-menu-item:hover,
+      .active-menu {
+        background: #3596B5;
+        color: #fff;
+
+        .icon {
+          background: #fff;
+          color: #3596B5;
+        }
+      }
+    }
+  }
+
+  .user-menu {
+    right: 0;
+  }
+
+  .user-menu::before {
+    right: 3%;
+    left: 72%;
+  }
+}
+
+.mat-drawer-container {
+  color: #504b4b;
+}
+
+.mat-drawer-inner-container {
+  display: none;
+}
+
+.mat-drawer-transition .mat-drawer-backdrop {
+  display: none;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  body {
+    margin: 0;
+    padding: 0;
+
+    .mat-mdc-menu-panel.mat-mdc-menu-panel {
+      overflow: visible;
+    }
+
+    .exam-menu::before,
+    .user-menu::before {
+      top: -2.344vw;
+      left: 7%;
+      border-top: 1.074vw solid transparent;
+      border-right: 1.758vw solid transparent;
+      border-bottom: 1.367vw solid #fff;
+      border-left: 1.758vw solid transparent;
+    }
+
+    ul {
+      right: 2.051vw;
+      padding: 0.488vw;
+
+      .sub-menu-item,
+      .user-menu-item {
+        padding: 0.977vw;
+        margin: 0.488vw;
+        gap: 0.977vw;
+        border-radius: 0.488vw;
+      }
+    }
+
+    .user-menu::before {
+      right: 3%;
+      left: 76%;
+    }
+  }
+}
+
+.sweet_textImportant {
+  color: red !important;
+  font-size: 14px !important;
+}
+
+.sweet_textImportant::before{
+  content: "";
+  background: url('/assets/images/alert-icon-1.png') no-repeat center/cover;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  margin: 0 -25px;
+}
+
+@media screen and (max-width: 767.9px) {
+  .exam-menu {
+    display: none;
+  }
+
+  .mat-drawer-transition .mat-drawer-backdrop {
+    display: block;
+  }
+
+  .mat-drawer-inner-container {
+    display: block;
+  }
+}

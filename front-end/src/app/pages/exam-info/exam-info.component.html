@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="result-blk" *ngIf="isShowData">
+    <h2 class="title">My Exam</h2>
+    <div class="card-blk">
+      <div *ngFor="let data of examDataSource | async" class="card-group">
+        <mat-card class="card">
+          <mat-card-header class="header">
+            <div mat-card-avatar class="firstName" [ngClass]="{
+              'pink': ['A', 'F', 'K', 'P', 'U','Z'].includes(data.examname.charAt(0).toUpperCase()),
+              'blue':['B', 'G', 'L', 'Q', 'S'].includes(data.examname.charAt(0).toUpperCase()),
+              'green': ['C', 'H', 'M', 'R', 'W'].includes(data.examname.charAt(0).toUpperCase()),
+              'yellow': ['D', 'I', 'N', 'V', 'X'].includes(data.examname.charAt(0).toUpperCase()),
+              'purple': ['E', 'J', 'O', 'T', 'Y'].includes(data.examname.charAt(0).toUpperCase())
+            }">
+              {{data.examname.split('')[0]}}
+            </div>
+            <mat-card-title class="title">{{data.examname}}</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content class="content">
+            <div class="mark-info">
+              <span class="text">Your Score </span>
+              <div class="mark-blk"
+                [ngClass]="{'success': data.mark >= data.passMark, 'fail': data.mark < data.passMark}">
+                {{data.mark}}
+              </div>
+            </div>
+            <div class="info-blk">
+              <mat-chip-listbox class="exam-info">
+                <p class="cmn-title-blk">Exam Info</p>
+                <mat-chip class="date" selected>
+                  <mat-icon matChipAvatar class="icon-btn date-range">date_range</mat-icon>
+                  <span>{{data.startDate | date: 'short'}}</span>
+                </mat-chip>
+                <mat-chip class="date" selected>
+                  <mat-icon matChipAvatar class="icon-btn date-range">date_range</mat-icon>
+                  <span>{{data.endDate | date: 'short'}}</span>
+                </mat-chip>
+                <mat-chip class="time" selected>
+                  <mat-icon matChipAvatar class="icon-btn time-icon">access_time</mat-icon>
+                  <span>{{formatDuration(data.duration)}}</span>
+                </mat-chip>
+              </mat-chip-listbox>
+              <mat-chip-listbox class="exam-result">
+                <p class="cmn-title-blk">Exam Result</p>
+                <mat-chip class="date" selected>
+                  <mat-icon matChipAvatar class="icon-btn date-range">date_range</mat-icon>
+                  <span>{{data.ansStartDate | date: 'short'}}</span>
+                </mat-chip>
+                <mat-chip class="date" selected>
+                  <mat-icon matChipAvatar class="icon-btn date-range">date_range</mat-icon>
+                  <span>{{data.ansEndDate | date: 'short'}}</span>
+                </mat-chip>
+                <mat-chip class="time" selected>
+                  <mat-icon matChipAvatar class="icon-btn time-icon">access_time</mat-icon>
+                  <span>{{formatDuration(data.timeSpend)}}</span>
+                </mat-chip>
+              </mat-chip-listbox>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div class="paginator">
+      <mat-paginator #paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons
+        aria-label="Select page of periodic elements" class="panginator mat-table-bottom-bar mat-elevation-z8">
+      </mat-paginator>
+    </div>
+  </div>
+  <div class="no-exam-info" *ngIf="!examInfoResult || examInfoResult.length === 0">
+    <p>You have not answered any exams yet.</p>
+  </div>
+</div>

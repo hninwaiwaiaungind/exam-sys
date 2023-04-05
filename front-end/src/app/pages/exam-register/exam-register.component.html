@@ -1,0 +1,121 @@
+<section class="container">
+  <div class="sec-container">
+    <h2 class="title">{{ isEditPage ? "Exam Details" : "Exam Register" }}</h2>
+
+    <mat-tab-group>
+      <mat-tab label="Details">
+        <form [formGroup]="examForm" class="exam-form">
+          <p>Title</p>
+          <mat-form-field appearance="outline">
+            <input formControlName="name" matInput type="text" />
+            <mat-error *ngIf="findError('name', 'required')">{{
+              message["EXAM_TITLE_REQUIRED"]
+              }}</mat-error>
+          </mat-form-field>
+
+          <p>Durations</p>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="duration">
+              <mat-option *ngFor="let duration of durations" [value]="duration">{{ duration }} mins</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <p>Start Date</p>
+          <mat-form-field appearance="outline">
+            <input (dateChange)="setTomorrowDate()" [min]="minDate" [ngxMatDatetimePicker]="startDatePicker"
+              formControlName="startDte" matInput placeholder="Choose a date" />
+            <mat-datepicker-toggle [for]="$any(startDatePicker)" matSuffix></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #startDatePicker [showSpinners]="true" [enableMeridian]="true">
+            </ngx-mat-datetime-picker>
+            <mat-error *ngIf="findError('startDte', 'required') && !findError('startDte', 'matDatetimePickerParse')">{{
+              message["EXAM_START_DATE_REQUIRED"]
+              }}</mat-error>
+            <mat-error *ngIf="findError('startDte', 'matDatetimePickerMin')">{{
+              message["INVALID_DATE"]
+              }}</mat-error>
+            <mat-error *ngIf="findError('startDte', 'matDatetimePickerParse')">{{
+              message["INVALID_DATE_FORMAT"]
+              }}</mat-error>
+          </mat-form-field>
+
+          <p>End Date</p>
+          <mat-form-field appearance="outline">
+            <input [min]="minEndDate" [ngxMatDatetimePicker]="endDatePicker" formControlName="endDte" matInput
+              placeholder="Choose a date" />
+            <mat-datepicker-toggle [for]="$any(endDatePicker)" matSuffix></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #endDatePicker [showSpinners]="true" [enableMeridian]="true">
+            </ngx-mat-datetime-picker>
+            <mat-error *ngIf="findError('endDte', 'required') && !findError('endDte', 'matDatetimePickerParse')">{{
+              message["EXAM_END_DATE_REQUIRED"]
+              }}</mat-error>
+            <mat-error *ngIf="findError('endDte', 'matDatetimePickerParse')">{{
+              message["INVALID_DATE_FORMAT"]
+              }}</mat-error>
+            <mat-error *ngIf="findError('endDte', 'matDatetimePickerMin')">{{ message["EXAM_MIN_DATE"]
+              }}</mat-error>
+          </mat-form-field>
+
+          <p>Pass Mark</p>
+          <mat-form-field appearance="outline">
+            <input matInput type="number" min="0" max="100" formControlName="passMark" />
+            <mat-error *ngIf="findError('passMark', 'required')">{{
+              message["MARK_REQUIRED"]
+              }}</mat-error>
+            <mat-error *ngIf="findError('passMark', 'max')">{{ message["MAX_MARK"]
+              }}{{ examForm.get('passMark')?.errors?.['max'].max }}
+              marks</mat-error>
+            <mat-error *ngIf="findError('passMark', 'min')">{{ message["MIN_MARK"]
+              }}{{ examForm.get('passMark')?.errors?.['min'].min }}
+              marks</mat-error>
+          </mat-form-field>
+        </form>
+      </mat-tab>
+      <mat-tab label="Questions">
+        <div class="questions-container">
+          <div class="question-file" *ngIf="!isEditPage">
+            <p>Questions</p>
+            <div>
+              <input #questionFile (input)="handleFileUpload($event)" accept=".csv" hidden type="file" />
+              <button (click)="questionFile.click()" class="btn csv-btn" mat-raised-button type="button">
+                <mat-icon>attach_file</mat-icon> choose a file
+              </button>
+              <span *ngIf="questionFileName" class="file-name">{{ questionFileName }}
+                <mat-icon class="icon" (click)="resetFile()">close</mat-icon>
+              </span>
+            </div>
+          </div>
+          <div>
+            <div *ngIf="isEditPage" class="questions-list">
+              <p>Questions</p>
+              <button mat-raised-button class="btn" color="primary" (click)="openDialog()">
+                <mat-icon>edit</mat-icon> Edit
+              </button>
+            </div>
+
+            <ul>
+                <li *ngFor="let question of dataSources$ | async; index as i" class="question">
+                  <div>
+                    <span class="index">{{ i + 1 }}</span>
+                    {{ question.question ?? question.attributes.question }}
+                  </div>
+                  <mat-icon class="btn-close" (click)="deleteQuestion(question)">close</mat-icon>
+                </li>
+            </ul>
+          </div>
+          <div [hidden]="!showPaginator">
+            <mat-paginator [pageSizeOptions]="pageSizeOptions" color="primary" class="paginator">
+            </mat-paginator>
+          </div>
+          <div class="btn-group">
+            <button (click)="createExam()" [disabled]="examForm.invalid" class="btn" color="primary" mat-raised-button>
+              {{ isEditPage ? "Update" : "Submit" }}
+            </button>
+            <button class="btn" color="warn" mat-raised-button routerLink="/exam-list">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</section>

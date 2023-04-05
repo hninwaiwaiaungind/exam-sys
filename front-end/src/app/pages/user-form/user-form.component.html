@@ -1,0 +1,74 @@
+<section class="container">
+  <div class="userform">
+    <div class="img-blk">
+      <div class="img-container">
+        <img *ngIf="!imgUrl" [src]="profileUrl || backUpImg" class="profile">
+        <img *ngIf="imgUrl" [src]="imgUrl" class="profile">
+        <button class="icon" (click)="imageInput.click()" color="primary" mat-mini-fab>
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <input #imageInput (input)="handleImage($event)" type="file" hidden>
+    </div>
+    <div class="content-blk">
+      <h2 class="m-title">{{pageTitle}}</h2>
+      <form [formGroup]="userForm">
+        <mat-form-field appearance="outline">
+          <mat-label class="title">Username</mat-label>
+          <input formControlName="username" matInput>
+          <mat-error *ngIf="myError('username', 'required')">Username required</mat-error>
+          <mat-error *ngIf="myError('username', 'maxlength')">Username can be max 15 characters long</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="title">Email</mat-label>
+          <input type="email" matInput formControlName="email" (change)="decidePermission()">
+          <mat-error *ngIf="myError('email', 'required')">Email required</mat-error>
+          <mat-error *ngIf="myError('email', 'pattern')">Invalid email format </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="title">Password</mat-label>
+          <input type="password" formControlName="password" matInput>
+          <mat-error *ngIf="passwordRequired && myError('password', 'required')">Password Required</mat-error>
+          <mat-error *ngIf="myError('password', 'pattern')">
+            Password must be at least 6 characters and max 20 characters long
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="title">Confirm Password</mat-label>
+          <input type="password" formControlName="confirmPassword" matInput>
+          <mat-error *ngIf="passwordRequired && myError('confirmPassword', 'required')">
+            Confirm password required
+          </mat-error>
+          <mat-error *ngIf="myError('confirmPassword', 'mustMatch')">
+            Password must be match
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label class="title">Role</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let role of roles " [value]="role.id">{{role.type}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="myError('role', 'required')">Role required</mat-error>
+        </mat-form-field>
+
+        <div class="btn-div classfix">
+          <button *ngIf="!isEditPage" class="cmn-btn-color mr-3" type="button" mat-raised-button (click)="addUserInfo()"
+            [disabled]="userForm.invalid">
+            Register
+          </button>
+          <button *ngIf="isEditPage" class="cmn-btn-color mr-3" type="button" mat-raised-button
+            [disabled]="!userForm.valid" (click)="updateUser()">
+            Update
+          </button>
+          <button class="btn mr-3" type="button" color="warn" mat-raised-button (click)="clear()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

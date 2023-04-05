@@ -1,0 +1,32 @@
+<h1 mat-dialog-title class="title">User Edit Form</h1>
+<div mat-dialog-content>
+  <form [formGroup]="userEditForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="Username" value="value" />
+      <mat-error *ngIf="myError('username', 'required')">Username is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Email" value="value" />
+      <mat-error *ngIf="myError('email', 'required')">Email is required</mat-error>
+      <mat-error *ngIf="myError('email', 'email')">
+        Must be a valid email address
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role.id"> {{ role.type }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions class="btn-group">
+  <button mat-raised-button class="edit-btn" color="primary" [disabled]="this.userEditForm.invalid" (click)="update()">
+    OK
+  </button>
+  <button mat-raised-button class="cancel-btn" color="warn" (click)="onNoClick()">Cancel</button>
+</div>

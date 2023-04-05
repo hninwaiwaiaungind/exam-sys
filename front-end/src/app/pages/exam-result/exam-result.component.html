@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="show-data" *ngIf="examWithMarkResult.length > 0">
+    <mat-card class="search-card">
+      <div class="exam-info">
+        <h3>{{examname}}</h3>
+        <div class="info-design">
+          <p>
+            <mat-icon class="icon start-date">calendar_today</mat-icon>
+            {{examStartDate | date: 'MMM dd, y, hh:mm a'}}
+            <span>&#8594;</span>
+          </p>
+          <p>
+            <mat-icon class="icon">calendar_today</mat-icon>
+            {{examEndDate | date: 'MMM dd, y, hh:mm a'}}
+          </p>
+          <p>
+            <mat-icon class="icon">schedule</mat-icon>
+            {{examDuration >= 60 ? examDuration/60 + ' hr' :
+            examDuration + ' mins'}}
+          </p>
+          <p>
+            <mat-icon class="icon">help_outline</mat-icon>
+            {{noOfQuestions +'&nbsp;' + 'Questions'}}
+          </p>
+        </div>
+      </div>
+      <div class="search-blk">
+        <mat-form-field class="search-input" appearance="outline">
+          <mat-label class="cmn-font">Search User Name</mat-label>
+          <input class="input-text" matInput placeholder="Search by username" [(ngModel)]="searchName" name="nameSearch"
+            (input)="textChange($event)" #input>
+        </mat-form-field>
+        <mat-form-field class="search-input" appearance="outline">
+          <mat-label class="cmn-font">Exam Result</mat-label>
+          <mat-select class="cmn-font" [(ngModel)]="selectedResult"
+            (selectionChange)="resultFilter(); nameAndResultFilter()">
+            <mat-option *ngFor="let eachInfo of examFilter" [value]=eachInfo.key>
+              {{eachInfo.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button class="btn btn-search" (click)="nameAndResultFilter()"
+          [disabled]="searchName == ''">Search</button>
+        <button mat-raised-button color="warn" class="btn" (click)="reset()"
+          [disabled]="searchName == ''">Clear</button>
+      </div>
+    </mat-card>
+    <div class="table mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let element; let i=index;">{{ paginator.pageSize * paginator.pageIndex + i + 1}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="examname">
+          <th mat-header-cell *matHeaderCellDef> Exam Name </th>
+          <td mat-cell *matCellDef="let element" class="cmn-text-width"> {{element.examname}} </td>
+        </ng-container>
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+          <td mat-cell *matCellDef="let element" class="cmn-text-width"> {{element.username}} </td>
+        </ng-container>
+        <ng-container matColumnDef="mark">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mark </th>
+          <td mat-cell *matCellDef="let element"
+            [ngClass]="{'success': element.mark >= element.passMark, 'failed': element.mark < element.passMark}">
+            <span class="text"> {{element.mark}} </span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="ansStartDte">
+          <th mat-header-cell *matHeaderCellDef> Answer Start Date </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ansStartDte | date: 'MMM dd, y, hh:mm a' }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="ansEndDte">
+          <th mat-header-cell *matHeaderCellDef>Answer End Date </th>
+          <td mat-cell *matCellDef="let element"> {{ element.ansEndDte | date: 'MMM dd, y, hh:mm a' }}</td>
+        </ng-container>
+        <ng-container matColumnDef="duration">
+          <th mat-header-cell *matHeaderCellDef> Duration </th>
+          <td mat-cell *matCellDef="let element"> {{ formatDuration(element.duration) }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i=index;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="7">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+    </div>
+    <div class="paginator">
+      <mat-paginator #paginator [pageSizeOptions]="pageOptions" showFirstLastButtons
+        aria-label="Select page of periodic elements" class="mat-table-bottom-bar mat-elevation-z8">
+      </mat-paginator>
+    </div>
+  </div>
+  <div class="no-exam-info" *ngIf="noDataDiv">
+    <p>Nobody have not answered this exam yet.</p>
+  </div>
+</div>

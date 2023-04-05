@@ -1,0 +1,154 @@
+<div *ngIf="validateExam">
+  <div *ngIf="!showResults" class="container">
+    <h2 class="quizz-logo">
+      <div class="timer">
+        <span class="card">
+          <span class="number current_hr">{{this.hours}}</span>
+        </span>
+        <h6>HOURS</h6>
+      </div>
+      <p class="dots">:</p>
+      <div class="timer">
+        <span class="card">
+          <span class="number current_min">{{this.minutes}}</span>
+        </span>
+        <h6>MINUTES</h6>
+      </div>
+      <p class="dots">:</p>
+      <div class="timer">
+        <span class="card">
+          <span class="number current_sec">{{this.seconds}}</span>
+          <span class="number half top">{{this.seconds}}</span>
+          <span class="number half bottom">{{this.seconds}}</span>
+        </span>
+        <h6>SECONDS</h6>
+      </div>
+    </h2>
+    <div class="quizz-card">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            {{selectedIndex + 1}}.
+            {{questionList[selectedIndex]?.attributes.question}}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <div *ngIf="questionList[selectedIndex]?.attributes.questionType == 'radio'">
+          <label class="sub-label">Choose Your Correct Answer</label>
+          <div class="ans-list"
+            *ngFor="let answer of getAnswer(questionList[selectedIndex]?.attributes.answerChoice); let i = index">
+            <mat-radio-button name="answer" color="primary" [checked]="selectedAnswer[selectedIndex]==i"
+              (change)="changeCheck(i,'radio')">
+              {{answer}}
+            </mat-radio-button>
+          </div>
+        </div>
+        <div *ngIf="questionList[selectedIndex]?.attributes.questionType == 'checkbox'">
+          <label class="sub-label">Choose Your Correct Answer</label>
+          <div class="ans-list"
+            *ngFor="let answer of getAnswer(questionList[selectedIndex]?.attributes.answerChoice); let i = index">
+            <mat-checkbox color="primary" [checked]="selectedAnswer[this.selectedIndex]?.includes(i)" name="{{answer}}"
+              (change)="changeCheck(i,'checkbox')">{{answer}}</mat-checkbox>
+          </div>
+        </div>
+        <div *ngIf="questionList[selectedIndex]?.attributes.questionType == 'textbox'">
+          <textarea class="textbox" matInput placeholder="answer your question here!" name="answer"
+            [formControl]="answerControl" style="resize: auto;" [(ngModel)]="selectedAnswer[selectedIndex]"
+            rows="10">{{textbox}}</textarea>
+        </div>
+        <section>
+          <div class="ans-next-btn">
+            <button [disabled]="questionList[selectedIndex]?.id === 0 " mat-icon-button (click)="previous()">
+              <mat-icon>arrow_backward</mat-icon>
+            </button>
+            <button [disabled]="questionList[selectedIndex]?.length" mat-icon-button (click)="next()">
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </section>
+      </mat-card>
+    </div>
+    <div class="side-content">
+      <mat-card-title class="side-content-ttl">Questions</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-selection-list class="mat-list" #question>
+        <div class="grid" *ngFor="let question of questionList; index as i">
+          <mat-list-item class="mat-item" [ngClass]="{'selected': i == selectedIndex}"
+            [ngStyle]='checkColor(selectedAnswer[i])' (click)="showContent(i)">
+            <span [ngStyle]='checkColor(selectedAnswer[i])'>{{i+1}}</span>
+          </mat-list-item>
+        </div>
+      </mat-selection-list>
+      <mat-divider></mat-divider>
+      <div class="map-container">
+        <div class="map">
+          <p class="no-active"></p><span class="map-txt">Current Position.</span>
+        </div>
+        <div class="map">
+          <p class="current"></p><span class="map-txt">No Answer.</span>
+        </div>
+        <div class="map">
+          <p class="active"></p><span class="map-txt">Already answered.</span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="btn-blk">
+        <button class="submit-btn" mat-raised-button color="primary" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showResults" class="result-container">
+    <div>
+      <mat-card class="card-result">
+        <mat-card-title class="res-title">
+          <h2>{{examName}}</h2>
+        </mat-card-title>
+        <mat-divider></mat-divider>
+        <div class="res-card">
+          <div class="date">
+            <span class="date-time">Start Time: {{ansStartDate | date:"yyyy/M/d HH:mm:ss"}}</span>
+            <span class="divider"></span>
+            <span class="date-time"> End Time: {{ansEndDate | date:"yyyy/M/d HH:mm:ss"}}</span>
+          </div>
+          <div class="res-info">
+            <div class="passMark">
+              <p class="info-mark">{{passMark}}</p>
+              <p class="info-txt">
+                <mat-icon>check_circle</mat-icon> Pass Mark
+              </p>
+            </div>
+            <div class="user-mark">
+              <div class="skill">
+                <mat-progress-spinner
+                  [ngClass]="checkSpinner(mark, passMark) === 'FAIL'? 'fail-spinner' : 'pass-spinner'"
+                  [value]="calculatePercent(mark, 100)"></mat-progress-spinner>
+                <div [ngStyle]="checkMark(mark, passMark)" id="number">
+                  {{mark}}
+                </div>
+                <p class="info-txt">
+                  <mat-icon> score</mat-icon> Your Score
+                </p>
+              </div>
+            </div>
+            <div class="time-duration">
+              <p class="info-mark">{{diffTime}}</p>
+              <p class="info-txt">
+                <mat-icon>alarm</mat-icon> Duration
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn" mat-raised-button (click)="sendEmail()">
+            <span>Send Email</span>
+            <mat-icon>mail_outline</mat-icon>
+          </button>
+          <button class="btn" mat-raised-button (click)="pdfDownload()">
+            <span>PDF Download</span>
+            <mat-icon>vertical_align_bottom</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

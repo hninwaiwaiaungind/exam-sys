@@ -1,0 +1,149 @@
+<div class="card-container">
+  <div fxLayout="row wrap">
+    <div fxFlex.lt-xl="100%" fxFlex.gt-lg="100%">
+      <mat-card class="filter-card">
+        <div class="filter-row">
+          <div class="filter-column">
+            <div class="filter-searchform">
+              <mat-form-field appearance="outline" class="search-input">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Exam Title" name="searchTitle" [(ngModel)]="searchTitle"
+                  (input)="textChange($event)">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="search-input">
+                <mat-label>Choose startDate</mat-label>
+                <input matInput [matDatepicker]="start" name="searchStartDate" [(ngModel)]="searchStartDate"
+                  [max]="searchEndDate" placeholder="MM/DD/YYYY">
+                <mat-datepicker-toggle matIconSuffix [for]="start"></mat-datepicker-toggle>
+                <mat-datepicker #start></mat-datepicker>
+                <mat-error>Invalid date format</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="search-input">
+                <mat-label>Choose endDate</mat-label>
+                <input matInput [matDatepicker]="end" name="searchEndDate" [(ngModel)]="searchEndDate"
+                  [min]="searchStartDate" placeholder="MM/DD/YYYY">
+                <mat-datepicker-toggle matIconSuffix [for]="end"></mat-datepicker-toggle>
+                <mat-datepicker #end></mat-datepicker>
+                <mat-error>Invalid date format</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="filter-column">
+            <div class="filter-btn">
+              <button mat-raised-button color="primary" class="search-btn" [disabled]="disableButton()"
+                (click)="getExamWithFilter()">Search</button>
+              <button mat-raised-button color="warn" class="search-btn" [disabled]="disableButton()"
+                (click)="clear()">Clear</button>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div fxLayout="row wrap">
+    <div fxFlex.lt-xl="50%" fxFlex.gt-lg="50%" fxFlex.lt-sm="100%" *ngFor="let exam of examDataSource | async">
+      <mat-card class="card">
+        <div class="row">
+          <div class="column">
+            <div *ngIf="isExamExpired(exam.attributes.startDte, exam.attributes.endDte); else activeBlock">
+              <div *ngIf="isExamUpComing(exam.attributes.endDte); else expiredBlock">
+                <mat-chip class="upcoming">
+                  <p>
+                    Up Coming
+                  </p>
+                </mat-chip>
+              </div>
+              <ng-template #expiredBlock>
+                <mat-chip class="expired">
+                  <p>
+                    Expired
+                  </p>
+                </mat-chip>
+              </ng-template>
+            </div>
+            <ng-template #activeBlock>
+              <mat-chip class="active">
+                <p>
+                  Active
+                </p>
+              </mat-chip>
+            </ng-template>
+          </div>
+          <mat-card-header class="card-header">
+            <mat-card-title class="card-title" matTooltip="{{exam.attributes.name}}"
+              [matTooltipPosition]="positionOptions">
+              {{ exam.attributes.name }}
+            </mat-card-title>
+            <button *ngIf="isAdmin" class="btn-edit" mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item [routerLink]="'/exam/' + exam.id">
+                <mat-icon color="primary">edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="deleteExam(exam.id)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </mat-card-header>
+        </div>
+        <div class="row">
+          <div class="column">
+            <div class="row duration-row">
+              <div class="column">
+                <app-icon [iconType]="'date_range'"></app-icon>
+              </div>
+              <div class="column date">
+                {{ exam.attributes.startDte | date: 'MMM dd, y, hh:mm a'}}
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="row duration-row">
+              <div class="column">
+                <app-icon [iconType]="'date_range'"></app-icon>
+              </div>
+              <div class="column date">
+                {{ exam.attributes.endDte | date: 'MMM dd, y, hh:mm a'}}
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="row duration-row">
+              <div class="column">
+                <app-icon [iconType]="'timer'"></app-icon>
+              </div>
+              <div class="column duration">
+                {{ exam.attributes.duration }}mins
+              </div>
+            </div>
+          </div>
+        </div>
+        <mat-card-actions>
+          <button mat-raised-button class="btn btn-start" [routerLink]="'/exam/' + exam.id + '/questions'"
+            *ngIf="!isExamExpired(exam.attributes.startDte, exam.attributes.endDte)">
+            <mat-icon aria-hidden="false" fontIcon="label_important"></mat-icon>
+            Start
+          </button>
+          <button mat-raised-button class="btn btn-score" [routerLink]="'/exam/' + exam.id + '/result'"
+            *ngIf="!isExamUpComing(exam.attributes.endDte)">
+            <mat-icon aria-hidden="false" fontIcon="score"></mat-icon>
+            Result
+          </button>
+          <button mat-raised-button class="btn btn-answer" [routerLink]="'/exam/' + exam.id + '/answer'"
+            *ngIf="!isExamUpComing(exam.attributes.endDte)">
+            <mat-icon aria-hidden="false" fontIcon="question_answer"></mat-icon>
+            Answer
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <mat-paginator *ngIf="isDataExist" [pageSizeOptions]="pageOptions" #paginator class="paginator" [length]="pageLength"
+    (page)="pageChange($event)">
+  </mat-paginator>
+</div>

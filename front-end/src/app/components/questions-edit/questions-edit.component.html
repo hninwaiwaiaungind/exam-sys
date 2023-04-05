@@ -1,0 +1,20 @@
+<mat-dialog-content *ngIf="questions" class="container">
+  <h2 class="title">Questions List</h2>
+  <div class="search-container">
+    <mat-form-field class="question-search" appearance="outline" (input)="filterQuestions()">
+      <input matInput placeholder="Search by question" name="searchQuestion" [(ngModel)]="searchQuestion" />
+    </mat-form-field>
+    <mat-checkbox color="primary" class="question-select" name="questionSelect"
+      (change)="selectAllQuestions($event)" [checked]="isChecked()" [indeterminate]="someChecked()">Select
+      All</mat-checkbox>
+  </div>
+
+  <mat-checkbox color="primary" *ngFor="let question of searchQuestion ? filteredQuestions : questions" class="question"
+    [value]="question.attributes.question" (change)="addOrRemoveQuestions($event, question)"
+    [checked]="isInclude(question)">
+    {{ question.attributes.question }}
+  </mat-checkbox>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="close()">OK</button>
+</mat-dialog-actions>

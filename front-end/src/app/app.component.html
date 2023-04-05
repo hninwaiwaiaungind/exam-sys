@@ -1,0 +1,90 @@
+<mat-drawer-container fullscreen>
+  <section class="nav-bar" *ngIf="showMenuBar">
+    <div class="nav-menus-container">
+
+      <div class="logo" routerLink="/my-test">
+        <img src="./assets/site-logo.png">
+      </div>
+
+      <ul class="nav-menus show-menu" cdkMenuBar>
+        <li class="nav-item" routerLink="/my-test" routerLinkActive="active-link" cdkMenuItem>
+          <mat-icon> list_alt</mat-icon>My Test
+        </li>
+        <li class="nav-item" [matMenuTriggerFor]="exam" [ngClass]="{'active-link' : examActive}"
+          (click)="showExamMenu = true">
+          <mat-icon>book</mat-icon>Exam
+        </li>
+        <li *ngIf="isAdmin" class="nav-item" routerLink="/user-list" routerLinkActive="active-link" cdkMenuItem>
+          <mat-icon>supervised_user_circle</mat-icon>Users
+        </li>
+        <mat-menu #exam="matMenu" class="select-menu">
+          <ul class="exam-menu">
+            <li class="sub-menu-item" routerLink="/exam-list" routerLinkActive="active-menu"
+              (click)="showExamMenu = false">
+              <button mat-mini-fab class="icon">
+                <mat-icon>receipt</mat-icon>
+              </button>
+              Exams
+            </li>
+            <li *ngIf="isAdmin" class="sub-menu-item" routerLink="/exam" routerLinkActive="active-menu"
+              (click)="showExamMenu = false">
+              <button mat-mini-fab class="icon">
+                <mat-icon>add</mat-icon>
+              </button>
+              Exam Register
+            </li>
+          </ul>
+        </mat-menu>
+      </ul>
+    </div>
+
+    <img class="profile show-menu" [src]=" profileUrl || backUpImg" [matMenuTriggerFor]="user">
+    <mat-menu #user="matMenu" class="select-menu">
+      <ul class="user-menu">
+        <li class="user-menu-item" routerLink="/profile/me" routerLinkActive="active-menu">
+          <button mat-mini-fab class="icon">
+            <mat-icon>person_outline</mat-icon>
+          </button>
+          Profile
+        </li>
+        <li class="user-menu-item" (click)="logOut()">
+          <button mat-mini-fab class="icon">
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
+          Logout
+        </li>
+      </ul>
+    </mat-menu>
+    <button mat-mini-fab class="menu-btn" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </section>
+
+  <mat-drawer #drawer mode="over" position="end">
+    <mat-icon class="close-btn" (click)="drawer.close()">close</mat-icon>
+    <ul>
+      <li class="nav-drawer-item" routerLink="/my-test" routerLinkActive="active">
+        <mat-icon> list_alt</mat-icon>My Test
+      </li>
+      <li class="nav-drawer-item" routerLink="/exam-list" routerLinkActive="active">
+        <mat-icon>receipt</mat-icon>Exams
+      </li>
+      <li *ngIf="isAdmin" class="nav-drawer-item" routerLink="/exam" routerLinkActive="active">
+        <mat-icon>add</mat-icon>Exam Register
+      </li>
+      <li *ngIf="isAdmin" class="nav-drawer-item" routerLink="/user-list" routerLinkActive="active">
+        <mat-icon>supervised_user_circle</mat-icon>Users List
+      </li>
+      <li class="nav-drawer-item" routerLink="/profile/me" routerLinkActive="active">
+        <mat-icon>person_outline</mat-icon>Profile
+      </li>
+      <li class="nav-drawer-item" (click)="drawer.close();logOut()">
+        <mat-icon>exit_to_app</mat-icon>Logout
+      </li>
+    </ul>
+  </mat-drawer>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-drawer-container>
